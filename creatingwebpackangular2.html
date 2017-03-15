@@ -3,7 +3,7 @@
 <div class="col0rn">
 <div class="rncont">
 <div class="rnhdbak">
-<span class="rnhd1">&nbsp;</span><span class="rnhd2">Creaing Websites using Webpacks in Angular2:</span><span class="rnhd3">&nbsp;</span>
+<span class="rnhd1">&nbsp;</span><span class="rnhd2">Model Binders in MVC:</span><span class="rnhd3">&nbsp;</span>
 </div>
 </div>
 </div>
@@ -14,8 +14,29 @@
 <a [routerLink]="route.routeKey" class="text-black">{{route.routeValue}}</a>
 </DIV>
 <div class="ii"> 
-Contents about this blog arrive sooner than expected...    
-    
+<h6>What are model binders?</h6> 
+ <p>Model binders are helpful in mapping html forms ui elements to model.  It acts as a bridge between html page and the model.</p>
+ <p>Model binders are used when we use html elements in the views.  The name property for the html elements change that may requires changes to the model if model binders are not used.  We cannot modify the models because these model s might be used in several places.</p>
+ <p>n order to do this we need to implement IModelBinder interface from the controller class.  This IModelBinder class has BindModel method that accepts ControllerContext and ModeBinderContect class.  A sample implementation for a form with two inputs namely the firstname and lastname will be like the below</p>
+ <code>
+public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+ 
+{
+ 
+HttpRequestBase httpRequest = controllerContext.HttpContext.Request;
+ 
+string firstName = httpRequest.Form.Get("firstname");
+ 
+string lastName = httpRequest.Form.Get("lastname");
+ 
+string age = httpRequest.Form.Get("Age");
+ 
+return new Employee { Name = firstName + lastName,Age=age };
+ 
+}     
+</code>
+<p>And the call for this in the controller will be</p>
+<code>public ActionResult Index([ModelBinder(typeof(CustomHome))] Employee employee)</code>   
 </div>
 
 
